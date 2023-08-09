@@ -10,6 +10,7 @@ return {
   'anuvyklack/pretty-fold.nvim',
   'nvim-tree/nvim-tree.lua',
   'ojroques/nvim-buildme',
+  'mg979/vim-visual-multi',
   {'akinsho/toggleterm.nvim', version = "*", opts = {--[[ things you want to change go here]]}},
   {
       "kdheepak/lazygit.nvim",

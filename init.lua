@@ -20,6 +20,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup(require("plugins"), {})
 
+vim.o.relativenumber = true
+vim.cmd('command! Refresh lua refresh_config()')
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 -- Set highlight on search
 vim.o.hlsearch = false
@@ -76,6 +80,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   pattern = '*',
 })
 
+-- plugin setup
 require("plugins/telescope")
 require("plugins/treesitter")
 require("plugins/lsp")

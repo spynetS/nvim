@@ -124,26 +124,32 @@ set.tabstop = 4
 set.softtabstop = 4
 set.shiftwidth = 4
 
-function MyLuaFunction(filename)
-    -- Your Lua function logic here
-    if filename == ".buildme.sh" then
-        vim.cmd('BuildMeStop')
-        
-        local current_tab = vim.fn.tabpagenr()
-        vim.cmd('tabnew')
-        vim.cmd('tabclose ' .. current_tab) -- Close the original tab
-        vim.cmd('BuildMe')
+------ compiling ------
+
+local compiling = false
+function MyLuaFunction()
+
+  if compiling == true then
+    vim.cmd('BuildMeStop')
+    vim.cmd('tabnew')
+    vim.cmd('BuildMe')
+    compiling = false
   end
 end
 
+function BuildMeOpenEdit()
+    vim.cmd('belowright split')
+    vim.cmd('resize 5')
+    vim.cmd('edit .buildme.sh')
+    compiling = true
+end
+
 vim.cmd[[
-    augroup CloseBufferAutocmd
+    augroup RunCommandAutocmd
         autocmd!
-        autocmd BufWinLeave * lua MyLuaFunction(vim.fn.expand('%'))
+        autocmd BufEnter * lua MyLuaFunction()
     augroup END
 ]]
 
--- T
--- The line beneath this is called `modeline`. See `:help modeline`
--- In your init.lua
--- vim: ts=2 sts=2 sw=2 et
+vim.api.nvim_set_keymap('n', '<leader>cc', ':lua BuildMeOpenEdit()<CR>', { noremap = true, silent = true })
+

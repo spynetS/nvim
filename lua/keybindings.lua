@@ -45,18 +45,6 @@ vim.keymap.set('n', '<leader><leader>j', require('smart-splits').swap_buf_down)
 vim.keymap.set('n', '<leader><leader>k', require('smart-splits').swap_buf_up)
 vim.keymap.set('n', '<leader><leader>l', require('smart-splits').swap_buf_right)
 
-function BuildMeOpenEdit()
-    vim.cmd('belowright split')
-    vim.cmd('BuildMeEdit')
-end
-
-function BuildMeOnBufferClose()
-    if vim.fn.bufwinnr('^BuildMe$') ~= -1 then
-        vim.cmd('silent! BuildMe')
-    end
-end
-
-vim.api.nvim_set_keymap('n', '<Leader>cc', [[:lua BuildMeOpenEdit()<CR>:autocmd BufWinLeave <buffer> lua BuildMeOnBufferClose()<CR>]], { noremap = true, silent = true })
 
 
 vim.api.nvim_set_keymap('n', '<leader>..', [[:e <c-r>=expand("%:p:h")<cr>/]], { noremap = true, silent = true })

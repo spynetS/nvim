@@ -88,12 +88,62 @@ require("plugins/nvim-cmp")
 require("plugins/colorizer")
 require("plugins/pretty-fold")
 require("plugins/nvim-tree")
-require("bufferline").setup{}
+require("plugins/smart-split")
 
 require("keybindings")
 
+require('cmp').setup({
+  sources = {
+    { name = 'buffer' },
+  },
+})
+
+require'cmp'.setup {
+  sources = {
+    { name = 'path' }
+  }
+}
+
+
 vim.opt.termguicolors = true
 
+
+vim.g.neovide_scale_factor = 1.0
+local change_scale_factor = function(delta)
+  vim.g.neovide_scale_factor = vim.g.neovide_scale_factor * delta
+end
+vim.keymap.set("n", "<C-=>", function()
+  change_scale_factor(1.1)
+end)
+vim.keymap.set("n", "<C-->", function()
+  change_scale_factor(1/1.1)
+end)
+
+local set = vim.opt -- set options
+set.tabstop = 4
+set.softtabstop = 4
+set.shiftwidth = 4
+
+function MyLuaFunction(filename)
+    -- Your Lua function logic here
+    if filename == ".buildme.sh" then
+        vim.cmd('BuildMeStop')
+        
+        local current_tab = vim.fn.tabpagenr()
+        vim.cmd('tabnew')
+        vim.cmd('tabclose ' .. current_tab) -- Close the original tab
+        vim.cmd('BuildMe')
+  end
+end
+
+vim.cmd[[
+    augroup CloseBufferAutocmd
+        autocmd!
+        autocmd BufWinLeave * lua MyLuaFunction(vim.fn.expand('%'))
+    augroup END
+]]
+
+-- T
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- In your init.lua
 -- vim: ts=2 sts=2 sw=2 et

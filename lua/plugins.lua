@@ -2,7 +2,8 @@
 return {
 
   'NvChad/nvim-colorizer.lua',
-  'akinsho/bufferline.nvim',
+  -- 'akinsho/bufferline.nvim',
+  { 'mrjones2014/smart-splits.nvim' },
   'windwp/nvim-ts-autotag',
   'galooshi/vim-import-js',
   'onsails/lspkind.nvim',
@@ -71,6 +72,9 @@ return {
       'rafamadriz/friendly-snippets',
     },
   },
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-cmdline',
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim', opts = {} },
